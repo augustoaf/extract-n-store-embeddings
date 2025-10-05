@@ -16,7 +16,7 @@
     <packaging>jar</packaging>
 
     <name>extract-store</name>
-    <description>A Spring Boot application for extracting text and persisting it in Chroma DB.</description>
+    <description>A Java application for extracting text and persisting it in a Vector DB (ChromaDB).</description>
 
     <properties>
         <java.version>24</java.version>

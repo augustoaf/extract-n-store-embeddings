@@ -37,7 +37,7 @@ public class ExtractStoreApplication {
         for (TextSegment segment : textSegments) {
             System.out.println("Chunk:");
             System.out.println(segment.text());
-            System.out.println("Metadata: " + segment.metadata());
+            System.out.println("\n Metadata: " + segment.metadata());
             System.out.println("----------------------------------------");
         }
 
@@ -57,18 +57,20 @@ public class ExtractStoreApplication {
         /* 
         test - retrieve data from the vector database based on a query 
         */
-        String query = "Who is Peter?";
+        String query = "Who act as Peter Pan?";
         System.out.println("\n ################ Query: " + query + " ################ \n");
         List<Content> retrievedContent = chromaRepo.retrieveData(query);
          
         for (Content content : retrievedContent) {
 
             // Print the text segment
+            System.out.println("----------------------------------------");
             System.out.println("Retrieved content: " + content.textSegment().text());
             //print text segment metadata
-            System.out.println("Metadata:" + content.textSegment().metadata());
+            System.out.println("\n Metadata:" + content.textSegment().metadata());
             
             // Print each content metadata key-value pair (embedding_ID and score)
+            System.out.println("\n Content metadata:");
             content.metadata().forEach((key, value) -> {
                 System.out.println(key + ": " + value);
             });

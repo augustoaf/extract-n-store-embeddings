@@ -1,67 +1,70 @@
 # extract-store
 
 ## Overview
-The `extract-store` project is a Spring Boot application designed to extract text from files and persist the extracted data into Chroma DB. This application leverages LangChain for text extraction and provides a RESTful API for interaction.
+`extract-store` is a Java application that extracts text from files and persists the extracted data into a Vector DB (ChromaDB), using LangChain4j framework for extract, embedding and retrieval.
 
 ## Features
-- Extract text from various file formats.
-- Persist extracted text into Chroma DB.
-- RESTful API for text extraction and retrieval.
+- Extract chunk texts from files.
+- Generate embeddings from the extracted text.
+- Persist embeddings and text segments into ChromaDB (also the text segment metadata).
+- Retrieve relevant content from ChromaDB via semantic search.
 
 ## Project Structure
 ```
 extract-store
 ├── src
-│   ├── main
-│   │   ├── java
-│   │   │   └── com
-│   │   │       └── inhouse
-│   │   │           ├── ExtractStoreApplication.java
-│   │   │           ├── config
-│   │   │           │   └── ChromaDbConfig.java
-│   │   │           ├── controller
-│   │   │           │   └── ExtractController.java
-│   │   │           ├── service
-│   │   │           │   ├── ExtractionService.java
-│   │   │           │   └── ChromaDbService.java
-│   │   │           └── model
-│   │   │               └── ExtractedText.java
-│   │   └── resources
-│   │       └── application.properties
-│   └── test
-│       └── java
-│           └── com
-│               └── inhouse
-│                   └── ExtractStoreApplicationTests.java
+│   └── main
+│       ├── java
+│       │   └── com
+│       │       └── inhouse
+│       │           ├── ExtractStoreApplication.java
+│       │           ├── config
+│       │           │   └── ChromaDBConfig.java
+│       │           │   └── ExtractionConfig.java
+│       │           ├── repository
+│       │           │   └── ChromaDBRepository.java
+│       │           │   └── VectorDBFactory.java
+│       │           │   └── VectorDBInterface.java
+│       │           ├── service
+│       │           │   └── ExtractionService.java
+│       └── resources
+│           └── application.properties
 ├── pom.xml
 └── README.md
 ```
 
 ## Setup Instructions
-1. **Clone the repository**:
+
+1. **Prerequisites**
+   - Java 17+
+   - Maven
+   - Running ChromaDB instance (with V2 API) 
+   
+2. **Configure ChromaDB**
+   #Using Docker, run the following command which will download the image and run the container exposing port 8000
+   #then, run the curl heartbeat command to check chorma db connectivity
    ```
-   git clone <repository-url>
-   cd extract-store
+   docker run -p 8000:8000 --name chromadb-server chromadb/chroma
+   curl http://localhost:8000/api/v2/heartbeat
    ```
 
-2. **Build the project**:
-   ```
+3. **Build the project**
+   ```sh
    mvn clean install
    ```
 
-3. **Run the application**:
-   ```
+4. **Run the application**
+   ```sh
    mvn spring-boot:run
    ```
+## App Dependencies
 
-## Usage
-- **Extract Text**: Send a POST request to `/extract` with the file to extract text from.
-- **Get Extracted Texts**: Send a GET request to `/extracted-texts` to retrieve all extracted texts.
-
-## Dependencies
 - Spring Boot
-- LangChain
-- Chroma DB
+- LangChain4j
+- ChromaDB (V2 API compatible)
+- Embedding model: all-minilm-l6-v2 
+- (Other dependencies as defined in `pom.xml`)
 
-## License
-This project is licensed under the MIT License.
+## Notes
+
+- Config java package has classes with essential and default configurations for Extraction and Segment storage / search
