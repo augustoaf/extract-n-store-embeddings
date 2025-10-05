@@ -51,7 +51,7 @@ public class ExtractStoreApplication {
 
         // Store text chunks in Chroma DB
         for (TextSegment segment : textSegments) {
-            chromaRepo.storeText(segment.text());
+            chromaRepo.storeText(segment);
         }
 
         /* 
@@ -63,9 +63,12 @@ public class ExtractStoreApplication {
          
         for (Content content : retrievedContent) {
 
+            // Print the text segment
             System.out.println("Retrieved content: " + content.textSegment().text());
-            System.out.println("Metadata:");
+            //print text segment metadata
+            System.out.println("Metadata:" + content.textSegment().metadata());
             
+            // Print each content metadata key-value pair (embedding_ID and score)
             content.metadata().forEach((key, value) -> {
                 System.out.println(key + ": " + value);
             });

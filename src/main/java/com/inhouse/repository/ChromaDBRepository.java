@@ -43,9 +43,8 @@ public class ChromaDBRepository implements VectorDBInterface {
                 .build();
     }
 
-    public void storeText(String text) {
-        TextSegment segment = TextSegment.from(text);
-        embeddingStore.add(embeddingModel.embed(segment).content(), segment);
+    public void storeText(TextSegment textSegment) {
+        embeddingStore.add(embeddingModel.embed(textSegment).content(), textSegment);
     }
 
     public List<Content> retrieveData(String query) {
