@@ -1,7 +1,7 @@
 # extract-store
 
 ## Overview
-`extract-store` is a Java application that extracts text from files and persists the extracted data into a Vector DB (ChromaDB), using LangChain4j framework for extract, embedding and retrieval.
+Firsts steps in a RAG solution - this is a Java application that extracts text from a file (based on segment size, also considering overlap between segments) and persists the extracted data + metadata into a Vector DB (ChromaDB). All using LangChain4j framework for extract from file, store text as embedding and retrieval using semantic search.
 
 ## Features
 - Extract chunk texts from files.
@@ -41,10 +41,14 @@ extract-store
    - Running ChromaDB instance (with V2 API) 
    
 2. **Configure ChromaDB**
-   #Using Docker, run the following command which will download the image and run the container exposing port 8000
-   #then, run the curl heartbeat command to check chorma db connectivity
+   
+   - Using Docker, run the following command which will download the image and run the container exposing port 8000
    ```
    docker run -p 8000:8000 --name chromadb-server chromadb/chroma
+   ```
+   
+   - Run the curl heartbeat command to check chorma db connectivity
+   ```
    curl http://localhost:8000/api/v2/heartbeat
    ```
 
