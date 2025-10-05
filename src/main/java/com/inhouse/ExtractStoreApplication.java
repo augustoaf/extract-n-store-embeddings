@@ -31,13 +31,13 @@ public class ExtractStoreApplication {
             return;
         }
 
-        // Print the resulting chunks
+        // Print the resulting chunks and their metadata
         System.out.println("Document split into " + textSegments.size() + " chunks.");
         System.out.println("----------------------------------------");
-
-        for (int i = 0; i < textSegments.size(); i++) {
-            System.out.println("Chunk " + (i + 1) + ":");
-            System.out.println(textSegments.get(i).text());
+        for (TextSegment segment : textSegments) {
+            System.out.println("Chunk:");
+            System.out.println(segment.text());
+            System.out.println("Metadata: " + segment.metadata());
             System.out.println("----------------------------------------");
         }
 
