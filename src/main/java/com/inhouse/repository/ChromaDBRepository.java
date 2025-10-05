@@ -11,21 +11,25 @@ import dev.langchain4j.store.embedding.chroma.ChromaApiVersion;
 import dev.langchain4j.store.embedding.chroma.ChromaEmbeddingStore;
 import java.util.List;
 
+import com.inhouse.config.ChromaDBConfig;
+
+/**
+ * Implementation of VectorDBInterface using ChromaDB as the vector database.
+ */
 public class ChromaDBRepository implements VectorDBInterface {
 
     private final EmbeddingStore<TextSegment> embeddingStore;
     private final EmbeddingModel embeddingModel;
     private final ContentRetriever contentRetriever;
-    private final int maxResults = 5; // Default max results for retrieval
 
-    public ChromaDBRepository(String chromaBaseUrl, String collectionName, EmbeddingModel model) {
+    public ChromaDBRepository(String chromaBaseUrl, String collectionName, EmbeddingModel model, ChromaApiVersion apiVersion) {
         this.embeddingModel = model;
         try {
             
             this.embeddingStore = ChromaEmbeddingStore.builder()
                     .baseUrl(chromaBaseUrl)
                     .collectionName(collectionName)
-                    .apiVersion(ChromaApiVersion.V2) // must be compatible with your ChromaDB server version
+                    .apiVersion(apiVersion) 
                     .build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,7 +39,7 @@ public class ChromaDBRepository implements VectorDBInterface {
         this.contentRetriever = EmbeddingStoreContentRetriever.builder()
                 .embeddingStore(this.embeddingStore)
                 .embeddingModel(this.embeddingModel)
-                .maxResults(maxResults) // max number of results to retrieve
+                .maxResults(ChromaDBConfig.DEFAULT_MAX_RESULTS) // max number of results to retrieve
                 .build();
     }
 
@@ -53,6 +57,7 @@ public class ChromaDBRepository implements VectorDBInterface {
     }
 
     public void deleteAll() {
+        // TO DO: remove only from the specified collection
         //embeddingStore.removeAll(List.of(ChromaDBConfig.COLLECTION_NAME));
         embeddingStore.removeAll();
     }

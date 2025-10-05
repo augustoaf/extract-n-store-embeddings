@@ -10,10 +10,16 @@ import com.inhouse.service.ExtractionService;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.rag.content.Content;
 
+/**
+ * Main application class for extracting text from files and storing it in a vector database.
+ */
 public class ExtractStoreApplication {
 
     public static void main(String[] args) {
 
+        /* 
+        extract text from a file and split it into smaller chunks 
+        */
         String filePath = "D:\\repos\\AI-embeddings\\extract-store\\input\\sample.txt";
         
         List<TextSegment> textSegments;
@@ -35,6 +41,9 @@ public class ExtractStoreApplication {
             System.out.println("----------------------------------------");
         }
 
+        /* 
+        store the text chunks in a vector database (Chroma DB) 
+        */
         VectorDBInterface chromaRepo = VectorDBFactory.getChromaDBRepository();
         
         // clear existing data in the default collection
@@ -45,7 +54,9 @@ public class ExtractStoreApplication {
             chromaRepo.storeText(segment.text());
         }
 
-        // query from Chroma DB
+        /* 
+        test - retrieve data from the vector database based on a query 
+        */
         String query = "Who is Peter?";
         System.out.println("\n ################ Query: " + query + " ################ \n");
         List<Content> retrievedContent = chromaRepo.retrieveData(query);

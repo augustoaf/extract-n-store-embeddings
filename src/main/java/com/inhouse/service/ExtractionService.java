@@ -11,11 +11,17 @@ import java.nio.file.Paths;
 
 import java.util.List;
 
+import com.inhouse.config.ExtractionConfig;
+
 public class ExtractionService {
-
-    static int maxSegmentSizeInChars = 500;
-    static int maxOverlapSizeInChars = 50;
-
+    
+    /**
+     * Extract text from a file and split it into smaller chunks.
+     * 
+     * @param file the path to the input file
+     * @return a list of text segments
+     * @throws IOException if there is an error reading the file
+     */
     public static List<TextSegment> extractFromFile(String file) throws IOException {
 
         // Load the text file
@@ -36,7 +42,10 @@ public class ExtractionService {
         
 
         // Split the document into text chunks
-        List<TextSegment> textSegments = DocumentSplitters.recursive(maxSegmentSizeInChars, maxOverlapSizeInChars).split(document);
+        List<TextSegment> textSegments = DocumentSplitters.recursive(
+            ExtractionConfig.MAX_SEGMENT_SIZE_CHARS, 
+            ExtractionConfig.MAX_OVERLAP_SIZE_CHARS)
+            .split(document);
 
         return textSegments;
     }

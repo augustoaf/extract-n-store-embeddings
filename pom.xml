@@ -24,6 +24,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- all langchain libs will follow the correct dependencies versions having this version as a base -->
             <dependency>
                 <groupId>dev.langchain4j</groupId>
                 <artifactId>langchain4j-bom</artifactId>
@@ -40,16 +41,23 @@
             <artifactId>langchain4j</artifactId>
         </dependency>
 
+        <!-- lib for connection to chromaDB -->
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-chroma</artifactId>
         </dependency>
-        
+    
+        <!-- lib to manipulate and breakdown text file in chunks -->
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-document-loader-github</artifactId>
         </dependency>
 
+        <!-- 
+         all-minilm-l6-v2 model - dependency to give as a parameter to ChromaDB convert text 
+         to embeddings, that dependency is necessary due usage of langchain as a framework 
+         to connect to ChromaDB which abstract the model embedding already part of chromaDB.
+        !-->
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>
