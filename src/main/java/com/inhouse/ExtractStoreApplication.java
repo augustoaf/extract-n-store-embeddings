@@ -21,11 +21,12 @@ public class ExtractStoreApplication {
         extract text from a file and split it into smaller chunks 
         */
         String filePath = "D:\\repos\\AI-embeddings\\extract-store\\input\\sample.txt";
+        String source = "https://pt.wikipedia.org/wiki/Peter_Pan";
         
         List<TextSegment> textSegments;
 
         try {
-            textSegments = ExtractionService.extractFromFile(filePath);
+            textSegments = ExtractionService.extractFromFile(filePath, source);
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
             return;

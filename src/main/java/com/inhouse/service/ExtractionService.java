@@ -26,7 +26,7 @@ public class ExtractionService {
      * @return a list of text segments
      * @throws IOException if there is an error reading the file
      */
-    public static List<TextSegment> extractFromFile(String file) throws IOException {
+    public static List<TextSegment> extractFromFile(String file, String source) throws IOException {
 
         // Load the text file
         Path filePath = Paths.get(file);
@@ -39,16 +39,12 @@ public class ExtractionService {
             .split(document);
 
         // Customize metadata - adding a "source" key with the file path as value
-        List<TextSegment> textSegmentsWithSource = cutomizeSourceMetadata(textSegments, "source", file);
+        List<TextSegment> textSegmentsWithSource = cutomizeSourceMetadata(textSegments, "source", source);
 
         return textSegmentsWithSource;
     }
 
-    // Example of customizing metadata - adding a "source" key with the file path as value
-    // example of current metadata without "source" key: 
-    // Metadata { metadata = {absolute_directory_path=D:\repos\AI-embeddings\extract-store\input, index=8, file_name=sample.txt}
-    // example of custom metadata with "source" key:
-    // Metadata { metadata = {absolute_directory_path=D:\repos\AI-embeddings\extract-store\input, index=8, file_name=sample.txt, source=D:\repos\AI-embeddings\extract-store\input\sample.txt}
+    // Example of customizing metadata - adding a "source" key to identify the origin of the file
     private static List<TextSegment> cutomizeSourceMetadata(List<TextSegment> textSegments, String key, String value) {
         
         List<TextSegment> segmentsWithSource = new ArrayList<>();
